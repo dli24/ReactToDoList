@@ -18,6 +18,7 @@ class TodosContainer extends Component {
             body: todo,
             completed: false
         }
+        //create is created in TodoModel
         TodoModel.create(newTodo).then((res) => {
             let todos = this.state.todos
             let newTodos = todos.push(res.data)
@@ -32,6 +33,7 @@ class TodosContainer extends Component {
     }
 
     fetchData(){
+        // all is created in TodoModel
         TodoModel.all().then((res)=>{
             this.setState ({
                 todos: res.data.todos,
@@ -39,11 +41,22 @@ class TodosContainer extends Component {
         })
     }
 
+    deleteTodo = (todo) => {
+        //delete is created in TodoModel
+        TodoModel.delete(todo).then((res)=>{
+            let todos = this.state.todos.filter(todo => {
+                return todo._id !== res.data._id
+            });
+            this.setState({todos})
+        })
+    }
+
+
     render(){
         return(
             <div className='todosComponent'>
                 <CreateTodoForm createTodo= {this.createTodo}/>
-                <Todos todos={this.state.todos} />
+                <Todos todos={this.state.todos} deleteTodo={this.deleteTodo} />
             </div>
         )
 
