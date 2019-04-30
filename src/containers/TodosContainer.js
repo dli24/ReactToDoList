@@ -3,10 +3,11 @@ import React, {Component} from 'react';
 class TodosContainer extends Component {
     render(){
         return(
-            <h2>
+            <div className='todosContainer'>
+                <h2>
                 TodosContainer
-            </h2>
-
+                </h2>
+            </div>
         )
 
 
