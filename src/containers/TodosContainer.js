@@ -12,7 +12,7 @@ class TodosContainer extends Component {
             todos:[]
         }
     // }
-
+    //CREATING TODO
     createTodo = (todo) => {
         let newTodo = {
             body: todo,
@@ -27,7 +27,7 @@ class TodosContainer extends Component {
         })
     }
 
-
+    //GETING TODO
     componentDidMount(){
         this.fetchData()
     }
@@ -40,7 +40,7 @@ class TodosContainer extends Component {
             })
         })
     }
-
+    //DELETING TODO
     deleteTodo = (todo) => {
         //delete is created in TodoModel
         TodoModel.delete(todo).then((res)=>{
@@ -51,12 +51,27 @@ class TodosContainer extends Component {
         })
     }
 
+    //EDITING TODO
+    updateTodo = (todo) => {
+        const isUpdatedTodo = t => {
+            return t._id === todo._id;
+        }
+        TodoModel.update(todo)
+        .then((res)=>{
+            let todos = this.state.todos;
+            todos.find(isUpdatedTodo).body = todo.body;
+            this.setState({todos: todos});
+        });
+
+    }
+
+
 
     render(){
         return(
             <div className='todosComponent'>
                 <CreateTodoForm createTodo= {this.createTodo}/>
-                <Todos todos={this.state.todos} deleteTodo={this.deleteTodo} />
+                <Todos todos={this.state.todos} deleteTodo={this.deleteTodo} updateTodo={this.updateTodo} />
             </div>
         )
 
